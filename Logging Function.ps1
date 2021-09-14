@@ -1,3 +1,7 @@
+
+# v1.1 - can be used with AA, Function will check if running onprem, AA or Hybrid
+# v1.0 - Init
+
 #region Parameters
 [string]$LogPath = "D:\_SCOWorkingDir\PowerShell\Warranty Info" #Path to store the Lofgile, only local or Hybrid
 [string]$LogfileName = "GetWarranty" #FileName of the Logfile, only local or Hybrid
