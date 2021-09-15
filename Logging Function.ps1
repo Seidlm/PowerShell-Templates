@@ -39,11 +39,11 @@ function Write-TechguyLog {
             Write-Verbose ("Path: ""{0}"" already exists." -f $logPath)
         }
         [string]$logFile = '{0}\{1}_{2}.log' -f $logPath, $(Get-Date -Format 'yyyyMMdd'), $LogfileName
-        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format dd.MM.yyyy-HH:mm:ss), $Type, $Text
+        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHMMss), $Type, $Text
         Add-Content -Path $logFile -Value $logEntry
     }
     elseif ($environment -eq "AAHybrid" -or $environment -eq "AAnoHybrid") {
-        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format dd.MM.yyyy-HH:mm:ss), $Type, $Text
+        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHMMss), $Type, $Text
 
         switch ($Type) {
             INFO { Write-Output $logEntry }
