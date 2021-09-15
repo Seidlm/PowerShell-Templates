@@ -45,7 +45,7 @@ function Write-TechguyLog {
     }
     elseif ($environment -eq "AAHybrid" -or $environment -eq "AAnoHybrid") {
         # TODO: #2 change DateTime to YYYYMMDD_HHMMSS
-        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format dd.MM.yyyy-HH:mm:ss), $Type, $Text
+        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHMMss), $Type, $Text
 
         switch ($Type) {
             INFO { Write-Output $logEntry }
