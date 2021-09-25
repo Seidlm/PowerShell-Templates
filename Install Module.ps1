@@ -1,10 +1,9 @@
-
-# v1.1 - can be used with AA, Function will check if running onprem, AA or Hybrid
 # v1.0 - Init
+# we are also using the Logging Part from here: https://github.com/Seidlm/PowerShell-Templates/blob/main/Logging%20Function.ps1
 
 #region Parameters
-[string]$LogPath = "D:\_SCOWorkingDir\PowerShell\Warranty Info" #Path to store the Lofgile, only local or Hybrid
-[string]$LogfileName = "GetWarranty" #FileName of the Logfile, only local or Hybrid
+[string]$LogPath = "C:\Users\MichaelSeidlau2mator\OneDrive - Seidl Michael\2-au2mator\1 - TECHGUY\GitHub\PowerShell-Templates" #Path to store the Lofgile, only local or Hybrid
+[string]$LogfileName = "InstallModule" #FileName of the Logfile, only local or Hybrid
 [int]$DeleteAfterDays = 10 #Time Period in Days when older Files will be deleted, only local or Hybrid
 
 #endregion Parameters
@@ -39,12 +38,10 @@ function Write-TechguyLog {
             Write-Verbose ("Path: ""{0}"" already exists." -f $logPath)
         }
         [string]$logFile = '{0}\{1}_{2}.log' -f $logPath, $(Get-Date -Format 'yyyyMMdd'), $LogfileName
-        # TODO: #1 change DateTime to YYYYMMDD_HHMMSS
         $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHMMss), $Type, $Text
         Add-Content -Path $logFile -Value $logEntry
     }
     elseif ($environment -eq "AAHybrid" -or $environment -eq "AAnoHybrid") {
-        # TODO: #2 change DateTime to YYYYMMDD_HHMMSS
         $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHMMss), $Type, $Text
 
         switch ($Type) {
@@ -61,6 +58,46 @@ Write-TechguyLog -Type INFO -Text "START Script"
 
 
 
+
+$Modules = @("sqlServer","dbatools") 
+
+foreach ($Module in $Modules) {
+    if (Get-Module -ListAvailable -Name $Module) {
+        Write-TechguyLog -Type INFO -Text "Module is already installed:  $Module"        
+    }
+    else {
+        Write-TechguyLog -Type INFO -Text "Module is not installed, try simple method:  $Module"
+        try {
+            Install-Module $Module -Force -Confirm:$false -ErrorAction Stop
+
+            Write-TechguyLog -Type INFO -Text "Module was installed the simple way:  $Module"
+        }
+        catch {
+            Write-TechguyLog -Type INFO -Text "Module is not installed, try the advanced way:  $Module"
+
+            try {
+                Set-ExecutionPolicy -ExecutionPolicy Unrestricted -force
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Install-PackageProvider -Name NuGet  -MinimumVersion 2.8.5.201 -Force 
+                Install-Module $Module -Force -Confirm:$false
+                Write-TechguyLog -Type INFO -Text "Module was installed the advanced way:  $Module"
+            }
+            catch {
+                Write-TechguyLog -Type INFO -Text "could not install module:  $Module"
+
+            }
+        }
+    }
+    try {
+        Write-TechguyLog -Type INFO -Text  "Import Module:  $Module"
+        Import-module $Module
+    
+    }
+    catch {
+        Write-TechguyLog -Type INFO -Text "could not import module:  $Module"
+
+    }
+}
 
 
 

@@ -1,0 +1,23 @@
+20210925_200922: <INFO> START Script
+20210925_200922: <INFO> Module is already installed:  sqlServer
+20210925_200922: <INFO> Import Module:  sqlServer
+20210925_200923: <INFO> Module is not installed, try simple method:  BurnToast
+20210925_200927: <INFO> Module is not installed, try the advanced way:  BurnToast
+20210925_200927: <INFO> could not install module:  BurnToast
+20210925_200927: <INFO> Import Module:  BurnToast
+20210925_200927: <INFO> END Script
+20210925_200951: <INFO> START Script
+20210925_200951: <INFO> Module is already installed:  sqlServer
+20210925_200951: <INFO> Import Module:  sqlServer
+20210925_200952: <INFO> Module is not installed, try simple method:  BurnToast
+20210925_200955: <INFO> Module is not installed, try the advanced way:  BurnToast
+20210925_200901: <INFO> Module was installed the advanced way:  BurnToast
+20210925_200901: <INFO> Import Module:  BurnToast
+20210925_200901: <INFO> END Script
+20210925_200931: <INFO> START Script
+20210925_200931: <INFO> Module is already installed:  sqlServer
+20210925_200931: <INFO> Import Module:  sqlServer
+20210925_200931: <INFO> Module is not installed, try simple method:  dbatools
+20210925_200915: <INFO> Module was installed the simple way:  dbatools
+20210925_200915: <INFO> Import Module:  dbatools
+20210925_200922: <INFO> END Script
