@@ -59,7 +59,7 @@ Write-TechguyLog -Type INFO -Text "START Script"
 
 
 
-$Modules = @("sqlServer","dbatools") 
+$Modules = @("sqlServer", "dbatools") 
 
 foreach ($Module in $Modules) {
     if (Get-Module -ListAvailable -Name $Module) {
