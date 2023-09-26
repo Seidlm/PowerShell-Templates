@@ -13,7 +13,8 @@ au2mator - Self Service Portal is a Web-based Frontend to build forms and trigge
 ## Install Module: 
 - https://www.techguy.at/powershell-custom-install-module-function/
 
-
+## get all azure Resource with Paging
+ - 
 
 
 https://www.techguy.at | https://www.au2mator.com
