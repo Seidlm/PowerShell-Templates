@@ -36,6 +36,11 @@ function Get-AzureResourcePaging {
         $ResponseNextLink = $Response."@odata.nextLink"
         $Resources += $Response.value
     }
+
+    if ($Resources -eq $null) {
+                $Resources = $Response
+            }
+    
     return $Resources
 }
 
