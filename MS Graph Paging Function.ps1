@@ -29,18 +29,14 @@ function Get-AzureResourcePaging {
     $Response = Invoke-RestMethod -Method GET -Uri $URL -Headers $AuthHeader
     $Resources = $Response.value
 
-    $ResponseNextLink = $Response."@odata.nextLink"
-    while ($ResponseNextLink -ne $null) {
-
-        $Response = (Invoke-RestMethod -Uri $ResponseNextLink -Headers $AuthHeader -Method Get)
-        $ResponseNextLink = $Response."@odata.nextLink"
+    while ($null -ne $($Response."@odata.nextLink")) {
+        $Response = (Invoke-RestMethod -Uri $($Response."@odata.nextLink") -Headers $AuthHeader -Method Get)
         $Resources += $Response.value
     }
 
-    if ($Resources -eq $null) {
+    if ($null -eq $Resources) {
                 $Resources = $Response
             }
-    
     return $Resources
 }
 
