@@ -1,4 +1,4 @@
-
+# v1.2 - using different way to check cloud, hybrid or onprem
 # v1.1 - can be used with AA, Function will check if running onprem, AA or Hybrid
 # v1.0 - Init
 
@@ -19,11 +19,14 @@ function Write-TechguyLog {
         [string]$Text
     )
 
+#Build log Text
+$logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHmmss), $Type, $Text
+
     #Decide Platform
     $environment = "local"
-    if ($env:AZUREPS_HOST_ENVIRONMENT) { $environment = "AAnoHybrid" }
+    if ($env:MSI_ENDPOINT) { $environment = "AAnoHybrid" }
     if ($env:AUTOMATION_WORKER_CERTIFICATE) { $environment = "AAHybrid" }
-    
+
     if ($environment -eq "AAHybrid" -or $environment -eq "local") {
         # Set logging path
         if (!(Test-Path -Path $logPath)) {
@@ -39,11 +42,12 @@ function Write-TechguyLog {
             Write-Verbose ("Path: ""{0}"" already exists." -f $logPath)
         }
         [string]$logFile = '{0}\{1}_{2}.log' -f $logPath, $(Get-Date -Format 'yyyyMMdd'), $LogfileName
-        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHmmss), $Type, $Text
-        Add-Content -Path $logFile -Value $logEntry
+
+        #Add-Content -Path $logFile -Value $logEntry -AsPlainText
+        Out-File -FilePath $logFile -Append -InputObject $logEntry -Encoding utf8
     }
     elseif ($environment -eq "AAHybrid" -or $environment -eq "AAnoHybrid") {
-        $logEntry = '{0}: <{1}> {2}' -f $(Get-Date -Format yyyyMMdd_HHmmss), $Type, $Text
+
 
         switch ($Type) {
             INFO { Write-Output $logEntry }
@@ -56,6 +60,8 @@ function Write-TechguyLog {
 }
 #endregion Function
 Write-TechguyLog -Type INFO -Text "START Script"
+
+
 
 
 
